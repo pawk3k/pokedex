@@ -1,0 +1,77 @@
+#my_id{
+    margin: 80px 80px 80px 80px;
+    padding: 160px 160px 160px 160px;
+}
+#right_m{
+    margin-right: 25%;
+}
+/*#my_id:hover{*/
+/*    background-color: #61dafb;*/
+/*}*/
+/*img{*/
+/*    position: absolute;*/
+
+/*img:hover {*/
+/*   opacity: 0.5;*/
+/*}*/
+
+.opacity1{
+    opacity: 1;
+    transition: .3s ease;
+}
+.opacity50{
+    opacity: 0.5;
+    transition: .3s ease;
+}
+
+.show{
+    visibility: visible;
+}
+.hide{
+    visibility: hidden;
+}
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+}
+
+
+.image {
+    padding-top: 20px;
+    width: 100%;
+    height: auto;
+}
+
+/* The overlay effect (full height and width) - lays on top of the container and over the image */
+/*.overlay {*/
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    right:13px;*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+/*    opacity: 1;*/
+/*    transition: .3s ease;*/
+/*}*/
+
+/* When you mouse over the container, fade in the overlay icon*/
+/*.container:hover .overlay {*/
+/*    opacity: 75%;*/
+/*}*/
+
+/* The icon inside the overlay is positioned in the middle vertically and horizontally */
+.icon {
+    color: white;
+    font-size: 75px;
+    position: absolute;
+    bottom: -18px;
+    right: 10px;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+ /*#When you move the mouse over the icon, change color*/
+.fa-user:hover {
+    color: #eee;
+}
