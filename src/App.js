@@ -1,32 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect} from 'react';
 import './App.css';
-import Grid from "@material-ui/core/Grid";
-import Pagination from "@material-ui/lab/Pagination";
-import MaterialGrid from "./Components/Filter/MaterialGrid";
-import Button from '@material-ui/core/Button';
-import Typography from "@material-ui/core/Typography";
-import TemplatesContainer from "./Components/Template/TemplatesContainer";
-import arr from "./Components/Template/output";
+import {
+    BrowserRouter as Router,
+} from "react-router-dom";
+
 import { createStore } from 'redux';
-import {Provider, useSelector} from "react-redux";
-import PaginationControlled from "./Components/Pagination/Pagination";
-import FilterWrapper from "./Components/Filter/Filter_Wrapper";
+import {Provider} from "react-redux";
+import Main from "./Components/SwitchMain/Main";
 const initialState = {
     // new_shop_arr:arr,//new_shop_arr
-    count: 0,// for counter
-    quantity:0, // number of items in buscket
-    display_arr : arr, // arr that is displayed in shop
     visibility_m: "hide", //visibility of menu
-    basket_arr:[],
+    display_arr:[],
     type_f:-1, //filter by type
     visibility_b:false,
     page_num:1,
+    page_count:1,
     refresh_s:false
 };
 
+
 function reducer(state=initialState,action) {
     switch(action.type) {
+        case 'SET_DISPLAY_ARR':
+            let page_count = Math.ceil(action.payload.length/20);
+            return {
+              ...state,
+                page_count: page_count,
+              display_arr: action.payload
+            };
         case 'INCREMENT':
             return {
                 ...state,
@@ -39,7 +40,6 @@ function reducer(state=initialState,action) {
             };
 
         case 'PAGE':
-            console.log(action.payload);
             return {
                 ...state,
                 page_num: action.payload,
@@ -47,13 +47,11 @@ function reducer(state=initialState,action) {
 
             };
         case "VISIBILITY":
-            console.log("Visi")
             return {
               ...state,
               visibility_b: !state.visibility_b
             };
         case "FILTER_B":
-            console.log(action.payload);
             return {
                 ...state,
                 type_f: action.payload
@@ -66,29 +64,19 @@ function reducer(state=initialState,action) {
 const store = createStore(reducer);
 
 
-function App() {
 
-    let kek =[1,2,3];
+function App() {
+    useEffect(()=>{
+        console.log("APP mounted")
+    });
     return (
     <div className="App">
+            <Provider store={store}>
+                <Router>
+                    <Main/>
+                </Router>
 
-        <Provider store={store}>
-
-            <PaginationControlled/>
-
-            <FilterWrapper/>
-
-            <PaginationControlled/>
-
-            <div className="container">
-
-
-            </div>
-            {/*<Wheel/>*/}
-            {/*<PokeImg/>*/}
-            {/*{new_arr}*/}
-            {/*<TemplatesContainer/>*/}
-        </Provider>
+            </Provider>
     </div>
   );
 }

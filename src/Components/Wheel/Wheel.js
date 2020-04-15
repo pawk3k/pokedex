@@ -1,15 +1,10 @@
-import React, {Component, useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {dispatch} from "react-redux"
+import React, {Component} from "react";
 import { connect } from 'react-redux'
-
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Template from "../Template/Template";
 
 
 class Wheel extends Component{
-    new_arr = [];
     state = {arr:[]};
     componentDidMount() {
 
@@ -35,8 +30,6 @@ class Wheel extends Component{
             }
         };
         await_type();
-
-    console.log(this.state)
     };
 
     render() {
@@ -55,19 +48,23 @@ class Wheel extends Component{
                     }
 
                     return(
-                           <Grid item xs={2}>
-                                    <div className="container justify-content-center" style={{backgroundColor:"#ABC",padding:"1vh 1vh 1vh 1vh"}} onClick={()=>{
-                                        this.props.dispatch({type:'FILTER_B',payload:x})
+                           <Grid key={num} item xs={6} lg={3}>
+                               <Button style={{width:"100%",height:'100%'}}>
+                                   <div key={num} className="container justify-content-center" style={{backgroundColor:"#ABC",padding:"4vh 4vh 4vh 4vh",borderRadius:"20px"}} onClick={()=>{
+                                       this.props.dispatch({type:'FILTER_B',payload:x})
 
-                                    }}>
-                                        <div className="row justify-content-center ">
-                                                <p key={x}>{x}</p>
-                                        </div>
-                                        <div className="row justify-content-center">
-                                            <img src={graphImage} alt={x}/>
+                                   }}>
+                                       <div className="row justify-content-center ">
+                                           <p key={x}>{x}</p>
+                                       </div>
+                                       <div className="row justify-content-center">
+                                           <img src={graphImage} alt={x}/>
 
-                                        </div>
-                                    </div>
+                                       </div>
+                                   </div>
+
+                               </Button>
+
                            </Grid>
                    );
                 })}

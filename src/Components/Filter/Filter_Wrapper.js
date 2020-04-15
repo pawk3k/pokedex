@@ -1,39 +1,35 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React from 'react';
+import { useSelector} from "react-redux";
 import Filter from "./Filter";
-import PropTypes from 'prop-types';
 import Wheel from "../Wheel/Wheel";
 import IconButton from "@material-ui/core/IconButton";
 import FilterListIcon from "@material-ui/icons/FilterList";
-
-
-const propTypes = {
-    onChangePage: PropTypes.func.isRequired,
-};
-
+import PaginationControlled from "../Pagination/Pagination";
 
 const FilterWrapper = props =>{
 
     const [show, toggleShow] = React.useState(false);
-    // its like dipatch
-    const dispatch = useDispatch();
-    //Use Selector is like map state to props
     const page_num = useSelector(state => state.page_num);
     const refresh = useSelector(state => state.refresh_s);
     const filter_type = useSelector(state => state.type_f);
-    // set(visibility);
-    const arr=[1,2,3];
+    const full_arr = useSelector(state => state.full_arr);
+    const display_arr = useSelector(state => state.display_arr);
     return (
-        <div style={{width:"100vw",height:"100vh"}}>
+        <div key={1} style={{width:"100vw",height:"100vh",backgroundColor:"#D5EDD4"}}>
 
+            <div className="container">
+                <PaginationControlled/>
 
-            {/*<Wheel/>*/}
-            <IconButton color="primary" aria-label="add to shopping cart" onClick={() => toggleShow(!show)}>
-                <FilterListIcon />
-            </IconButton>
+            </div>
+            <div className="container">
+                <div className="col">Filter</div>
+                <IconButton color="primary" aria-label="add to shopping cart" onClick={() => toggleShow(!show)}>
+                    <FilterListIcon />
+                </IconButton>
+            </div>
+
             {show && <Wheel/> }
-
-            <Filter page_num={page_num} filter_type={filter_type} refresh_s={refresh}/>
+            {<Filter full_arr={full_arr} key={1} page_num={page_num} filter_type={filter_type} refresh_s={refresh} display_arr={display_arr}/> }
         </div>
     )
 };
