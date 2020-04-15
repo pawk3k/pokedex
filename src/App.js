@@ -8,13 +8,10 @@ import { createStore } from 'redux';
 import {Provider} from "react-redux";
 import Main from "./Components/SwitchMain/Main";
 const initialState = {
-    // new_shop_arr:arr,//new_shop_arr
-    visibility_m: "hide", //visibility of menu
     display_arr:[],
     type_f:-1, //filter by type
-    visibility_b:false,
-    page_num:1,
-    page_count:1,
+    page_num:1, //Displayed page
+    page_count:1, //Number of pages
     refresh_s:false
 };
 
@@ -28,28 +25,12 @@ function reducer(state=initialState,action) {
                 page_count: page_count,
               display_arr: action.payload
             };
-        case 'INCREMENT':
-            return {
-                ...state,
-                count: state.count + 1
-            };
-        case 'DECREMENT':
-            return {
-                ...state,
-                count: state.count - 1
-            };
-
         case 'PAGE':
             return {
                 ...state,
                 page_num: action.payload,
                 refresh_s: !state.refresh_s
 
-            };
-        case "VISIBILITY":
-            return {
-              ...state,
-              visibility_b: !state.visibility_b
             };
         case "FILTER_B":
             return {
@@ -63,19 +44,18 @@ function reducer(state=initialState,action) {
 
 const store = createStore(reducer);
 
-
-
 function App() {
     useEffect(()=>{
         console.log("APP mounted")
     });
     return (
     <div className="App">
+
+            {/*Passing redux store*/}
             <Provider store={store}>
                 <Router>
                     <Main/>
                 </Router>
-
             </Provider>
     </div>
   );

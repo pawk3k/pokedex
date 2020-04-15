@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import "./Template.css"
-
+//Component that displays each pokemon by template so all of them look alike
 class Template extends Component{
     types_arr = [];
     constructor() {
@@ -72,7 +72,6 @@ class Template extends Component{
 
                         <div className="row">
                             <img src={this.state.poke_foto} key= {this.state.poke_id} alt={this.state.poke_name + " not available"}/>
-
 
                         </div>
                     </div>

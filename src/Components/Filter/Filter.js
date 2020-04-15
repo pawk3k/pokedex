@@ -87,6 +87,8 @@ class Filter extends Component {
             this.setState({...this.state,filtered_pokemons:first20,pokemnos:this.props.display_arr});
         }else {
            await_name(807).catch(x=>console.log(x));
+
+           //Waits for all pokemon names and types and ids to be fetched
             Promise.all(promises).then(x =>
                 {
                     this.props.dispatch({type:"SET_DISPLAY_ARR",payload:this.inner_arr});
@@ -107,6 +109,8 @@ class Filter extends Component {
     render() {
         return(
             <div className="container-fluid" style={{backgroundImage:require("../Wheel/res/normal_ns.svg"),objectFit:"cover",width:"100%",height:"100%",backgroundColor:"#D5EDD4"}}>
+
+                {/* Text Field which filters state arr to match the input data */}
                 <TextField  defaultValue={this.state.search} id="outlined-basic" label="Search" variant="outlined" onChange={(e) =>
                 {
                     const  new_poke = this.state.pokemnos.filter(x=>
@@ -121,7 +125,7 @@ class Filter extends Component {
 
 
                     <Grid container spacing={2}>
-
+                        {/* If data in process of fetching -> display spinner otherwise display pocemon page*/}
                         {!this.state.isLoading ?  this.state.filtered_pokemons.map((x,id)=>{
                             return(
                                 // <div className="col">

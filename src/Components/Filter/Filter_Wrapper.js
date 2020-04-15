@@ -5,7 +5,7 @@ import Wheel from "../Wheel/Wheel";
 import IconButton from "@material-ui/core/IconButton";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import PaginationControlled from "../Pagination/Pagination";
-
+//Wraps Filter and pass certein values to it
 const FilterWrapper = props =>{
 
     const [show, toggleShow] = React.useState(false);
@@ -27,7 +27,6 @@ const FilterWrapper = props =>{
                     <FilterListIcon />
                 </IconButton>
             </div>
-
             {show && <Wheel/> }
             {<Filter full_arr={full_arr} key={1} page_num={page_num} filter_type={filter_type} refresh_s={refresh} display_arr={display_arr}/> }
         </div>

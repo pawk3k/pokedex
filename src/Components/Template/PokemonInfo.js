@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
+
+//Extended info component that fetches information about pokemon
 const PokemonInfo = () =>{
     let { id } = useParams();
     const [show, toggleShow] = React.useState(false);
@@ -21,6 +23,7 @@ const PokemonInfo = () =>{
     let poke_abilities;
     let poke_stats ;
     let poke_moves;
+    //Fetching all displayed data
     useEffect(() =>{
             const sleep = ms => {
                 return new Promise(resolve => setTimeout(resolve, ms))
@@ -90,6 +93,8 @@ const PokemonInfo = () =>{
 
 
             <div className="jumbotron vertical-center">
+
+                {/*Button to return to the main page*/}
                 <div className="d-flex" style={{alingItems:"flex-start",position:"sticky",top:"10px",zIndex:"1"}}>
                     <div style={{position:"sticky",top:"10px",zIndex:"1"}}>
                         <Link to={"/"}><IconButton color="primary" aria-label="add to shopping cart">
@@ -97,11 +102,14 @@ const PokemonInfo = () =>{
                         </IconButton></Link>
 
                     </div>
-
+                {/*Extended info*/}
                 <div className="container" style={{backgroundColor:"#999",alignItems:"center",justifyContent:"flex-end"}}>
-                    <div style={{color:"black",backgroundColor:"#CBA",opacity:"60",margin:"2vh 2vh 2vh 2vh"}}>{pokeInfo.poke_name}</div>
-                    <div className="row justify-content-center" style={{justyfiContent:"center"}}>
-                        {/**/}
+                    {/* Pokemon name*/}
+                    <div style={{color:"black",backgroundColor:"#CBA",opacity:"60",margin:"2vh 2vh 2vh 2vh"}}>
+                        {pokeInfo.poke_name}
+                    </div>
+                    <div className="row justify-content-center" style={{justifyContent:"center"}}>
+                        {/* Pokemon img*/}
                         <div  style={{padding:"4vh 4vh 4vh 4vh",alignSelf:"center"}}>
                             <img src={pokeInfo.poke_foto} key= {id}  alt={"kek"}/>
                         </div>
@@ -109,7 +117,6 @@ const PokemonInfo = () =>{
                             {pokeInfo.stats}
                         </div>
                     </div>
-
 
                     <div className="d-flex justify-content-between flex-column">
                         <div className="d-flex flex-row">
@@ -125,7 +132,7 @@ const PokemonInfo = () =>{
                         Moves:
                     </Button>
                     {
-                        show && (           <div className="container" style={{backgroundColor:"#CBA"}}>
+                        show && (<div className="container" style={{backgroundColor:"#CBA"}}>
                             {pokeInfo.moves}
                         </div>)
                     }
