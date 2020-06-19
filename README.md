@@ -9,6 +9,11 @@ Also react-router is used to make link to every page of pokem for extended infor
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Here how projects looks like:
+
+![image info](./first_page.png)
+
+![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
 
 
 
