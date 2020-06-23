@@ -11,8 +11,8 @@ export default function PaginationControlled() {
     const [,setPage] = React.useState(1);
     const handleChange = (event, value) => {
         setPage(value);
-        const kek = () => dispatch({type:"PAGE",payload:value});
-        kek();
+        const changePage = () => dispatch({type:"PAGE",payload:value});
+        changePage();
     };
 
     return (

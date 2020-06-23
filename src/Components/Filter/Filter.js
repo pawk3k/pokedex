@@ -76,7 +76,6 @@ class Filter extends Component {
                 }));
         };
         const await_name = async (num) =>{
-            // await_name2(20);
             for (let i = 1; i < num; i++) {
                 get_name(i);
             }
@@ -86,7 +85,7 @@ class Filter extends Component {
             let first20 = this.props.display_arr.slice(0,20);
             this.setState({...this.state,filtered_pokemons:first20,pokemnos:this.props.display_arr});
         }else {
-           await_name(807).catch(x=>console.log(x));
+           await_name(100).catch(x=>console.log(x));
 
            //Waits for all pokemon names and types and ids to be fetched
             Promise.all(promises).then(x =>
@@ -128,7 +127,6 @@ class Filter extends Component {
                         {/* If data in process of fetching -> display spinner otherwise display pocemon page*/}
                         {!this.state.isLoading ?  this.state.filtered_pokemons.map((x,id)=>{
                             return(
-                                // <div className="col">
                                     <Grid key={id}  item xs={6} lg={4}>
                                         <Paper className={this.props.styles} style={{        padding: "2vw",
                                             textAlign: "center",
@@ -142,7 +140,6 @@ class Filter extends Component {
                                             </Link>
                                         </Paper>
                                     </Grid>
-                                // </div>
 
                             )
                         }) :
