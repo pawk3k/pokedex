@@ -59,46 +59,82 @@ class Filter extends Component {
     componentDidMount() {
         this.setState({...this.state,isLoading:true});
 
-        let promises=[];
         this.inner_arr  = [];
+        let array1 = [];
+        let pages_count;
+        fetch('https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0').then(response => response.json()).then(function(data) {
+            // this.inner_arr = data.results;
+            //
+            //             this.props.dispatch({type:"SET_DISPLAY_ARR",payload:this.inner_arr});
+            //             let start_id =   (this.props.page_num === 1 ) ? 1 : (this.props.page_num-1)*20;
+            //             let end_id = data.count/20;
+            //             let first20 = this.props.display_arr.slice(start_id,end_id);
+            //             this.setState({...this.state,filtered_pokemons:first20,isLoading:false});
+            let i = 0;
+            const promises = {};
+            pages_count = data.count/20;
+            data.results.map(x => { promises[i++] = fetch(x.url)});
+            return data.results;
+        }).then(async data => {
+            await Promise.all(data.map((e, index, array) => {
+                return fetch(e.url)
+                    .then(response => response.json())
+                    .then(data => {
+                        array[index] = {...e, ...data};
+                        array1[index] = {...e, ...data};
+                        console.log("update");
+                    })
+            }));
+            console.log("new", data);
+            return data;
+        }).then(data => {this.inner_arr =data
+                        this.props.dispatch({type:"SET_DISPLAY_ARR",payload:this.inner_arr});
+                        let start_id =   (this.props.page_num === 1 ) ? 1 : (this.props.page_num-1)*20;
+                        let end_id = pages_count;
+                        let first20 = this.props.display_arr.slice(start_id,end_id);
+                        this.setState({...this.state,filtered_pokemons:first20,isLoading:false});
 
-        const get_name =  (i) =>{
-
-          promises.push(fetch('https://pokeapi.co/api/v2/pokemon/' + i)
-                .then(response => response.json())
-                .then(data=> {
-                    const poke_name = data.name;
-                    const poke_id = data.id;
-                    const types = data.types;
-                    this.inner_arr.push({types:types,poke_name:poke_name,poke_id:poke_id});
-                    this.setState({...this.state, pokemnos:this.inner_arr});
-
-                }));
-        };
-        const await_name = async (num) =>{
-            for (let i = 1; i < num; i++) {
-                get_name(i);
-            }
-        };
-
-        if(this.props.display_arr.length>0){
-            let first20 = this.props.display_arr.slice(0,20);
-            this.setState({...this.state,filtered_pokemons:first20,pokemnos:this.props.display_arr});
-        }else {
-           await_name(100).catch(x=>console.log(x));
-
-           //Waits for all pokemon names and types and ids to be fetched
-            Promise.all(promises).then(x =>
-                {
-                    this.props.dispatch({type:"SET_DISPLAY_ARR",payload:this.inner_arr});
-                    let start_id =   (this.props.page_num === 1 ) ? 1 : (this.props.page_num-1)*20;
-                    let end_id = this.props.page_num*20;
-                    let first20 = this.props.display_arr.slice(start_id,end_id);
-                    this.setState({...this.state,filtered_pokemons:first20,isLoading:false});
-                }
-
-            );
-        }
+        });
+        console.log(array1);
+        // let promises=[];
+        //
+        // const get_name =  (i) =>{
+        //
+        //   promises.push(fetch('https://pokeapi.co/api/v2/pokemon/' + i)
+        //         .then(response => response.json())
+        //         .then(data=> {
+        //             const poke_name = data.name;
+        //             const poke_id = data.id;
+        //             const types = data.types;
+        //             this.inner_arr.push({types:types,poke_name:poke_name,poke_id:poke_id});
+        //             this.setState({...this.state, pokemnos:this.inner_arr});
+        //
+        //         }));
+        // };
+        // const await_name = async (num) =>{
+        //     for (let i = 1; i < num; i++) {
+        //         get_name(i);
+        //     }
+        // };
+        //
+        // if(this.props.display_arr.length>0){
+        //     let first20 = this.props.display_arr.slice(0,20);
+        //     this.setState({...this.state,filtered_pokemons:first20,pokemnos:this.props.display_arr});
+        // }else {
+        //    await_name(100).catch(x=>console.log(x));
+        //
+        //    //Waits for all pokemon names and types and ids to be fetched
+        //     Promise.all(promises).then(x =>
+        //         {
+        //             this.props.dispatch({type:"SET_DISPLAY_ARR",payload:this.inner_arr});
+        //             let start_id =   (this.props.page_num === 1 ) ? 1 : (this.props.page_num-1)*20;
+        //             let end_id = this.props.page_num*20;
+        //             let first20 = this.props.display_arr.slice(start_id,end_id);
+        //             this.setState({...this.state,filtered_pokemons:first20,isLoading:false});
+        //         }
+        //
+        //     );
+        // }
 
 
         this.inner_arr =[];
@@ -125,7 +161,7 @@ class Filter extends Component {
 
                     <Grid container spacing={2}>
                         {/* If data in process of fetching -> display spinner otherwise display pocemon page*/}
-                        {!this.state.isLoading ?  this.state.filtered_pokemons.map((x,id)=>{
+                        {!this.state.isLoading ?  this.inner_arr.map((x,id)=>{
                             return(
                                     <Grid key={id}  item xs={6} lg={4}>
                                         <Paper className={this.props.styles} style={{        padding: "2vw",
@@ -136,7 +172,7 @@ class Filter extends Component {
                                             marginTop: "2vh",
                                             marginBottom: "2vh"}}>
                                             <Link to={'/Pokemon/' + x.poke_id}>
-                                                <Template  id={x.poke_id} refresh={this.state.refresh_p}/>
+                                                <Template  id={x.id} refresh={this.state.refresh_p}/>
                                             </Link>
                                         </Paper>
                                     </Grid>
