@@ -28,7 +28,7 @@ class Filter extends Component {
 
 
 
-    componentDidUpdate(prevProps) {
+    async componentDidUpdate(prevProps) {
 
         const typeMatch =(value) => {
             let return_v = false;
@@ -47,7 +47,6 @@ class Filter extends Component {
             this.props.dispatch({type:"SET_DISPLAY_ARR",payload:new_poke});
             this.setState({...this.state, page_num:1,filtered_pokemons:first_page,refresh_p:!this.state.refresh_p});
 
-
         }
         else if (this.props.page_num !== prevProps.page_num) {
             let {page_num} = this.props;
@@ -57,8 +56,10 @@ class Filter extends Component {
 
             let start_id =   (page_num === 1 ) ? 1 : (page_num-1)*20;
             let end_id = page_num*20;
-            new_arr2 = tem_arr.slice(start_id,end_id);
+            // new_arr2 = tem_arr.slice(start_id,end_id);
 
+            const pagePokemons = await fetchData(20* page_num)
+            this.inner_arr = pagePokemons;
             this.setState({...this.state, page_num:this.props.page_num,filtered_pokemons:new_arr2,refresh_p:!this.state.refresh_p});
         }
 
@@ -66,7 +67,7 @@ class Filter extends Component {
     async componentDidMount() {
         this.setState({...this.state,isLoading:true});
         this.inner_arr  = [];
-        let data = await fetchData();
+        let data = await fetchData(20);
         let page = await fetchPage();
         console.log(page.next);
         console.log();

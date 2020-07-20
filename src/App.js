@@ -10,8 +10,8 @@ import Main from "./Components/SwitchMain/Main";
 const initialState = {
     display_arr:[],
     type_f:-1, //filter by type
-    page_num:10, //Displayed page
-    page_count:1, //Number of pages
+    page_num:1, //Displayed page
+    page_count:10, //Number of pages
     refresh_s:false
 };
 
